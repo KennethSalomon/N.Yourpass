@@ -8,5 +8,8 @@
     "axios": "^1.13.4",
     "qrcode": "^1.5.4",
     "resend": "^6.9.3"
+  },
+  "devDependencies": {
+    "supabase": "^2.78.1"
   }
 }
