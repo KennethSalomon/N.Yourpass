@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Détail Événement — YourPass Bénin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .event-hero { height: 480px; position: relative; overflow: hidden; }
+    .event-hero img { width:100%; height:100%; object-fit:cover; }
+    .event-hero-overlay { position:absolute; inset:0; background:linear-gradient(to top, var(--dark) 15%, rgba(15,10,30,.5) 70%, transparent 100%); }
+    .event-hero-content { position:absolute; bottom:0; left:0; right:0; padding:40px; }
+    .event-layout { display:grid; grid-template-columns:1fr 380px; gap:48px; align-items:start; padding-top:48px; padding-bottom:80px; }
+    .ticket-type-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .ticket-type-card:hover { border-color: var(--primary-light); }
+    .ticket-type-card.selected { border-color: var(--primary); background: rgba(124,58,237,.08); }
+    .ticket-type-card .tt-info h4 { margin-bottom:4px; }
+    .ticket-type-card .tt-info p { font-size:.82rem; }
+    .ticket-type-card .tt-price { text-align:right; }
+    .ticket-type-card .tt-price .amount { font-size:1.15rem; font-weight:800; color:var(--primary-light); }
+    .qty-control { display:flex; align-items:center; gap:12px; }
+    .qty-btn { width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); color:var(--text); font-size:1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:var(--transition); }
+    .qty-btn:hover { background:rgba(124,58,237,.2); border-color:var(--primary-light); }
+    .qty-value { font-size:1rem; font-weight:700; min-width:24px; text-align:center; }
+    .order-box { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:28px; backdrop-filter:blur(12px); position:sticky; top:90px; }
+    .order-line { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.05); font-size:.9rem; }
+    .order-line:last-child { border:none; font-weight:700; font-size:1rem; }
+    .order-line .label { color:var(--text-muted); }
+    .artiste-chip { display:flex; align-items:center; gap:12px; padding:12px; background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius-sm); margin-bottom:10px; }
+    .artiste-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--accent)); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    @media(max-width:768px){ .event-layout{grid-template-columns:1fr;} .event-hero{height:300px;} }
+  </style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div class="page-loader"><div class="loader-logo"><span style="color:var(--primary-light)">Your</span><span style="color:var(--accent)">Pass</span></div><div class="loader-bar"><div class="loader-bar-inner"></div></div></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">🎫</div><span>Your<span class="highlight">Pass</span></span></a>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="events.html" class="active">Événements</a>
+    <a href="ads.html">Organisateurs</a>
+    <a href="contact.html">Support</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="wallet-btn"><div class="wallet-dot"></div><i class="fa-solid fa-wallet"></i> Mon Wallet</a>
+    <a href="connexion.html" class="btn btn-primary btn-sm">Connexion</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- EVENT HERO -->
+<div class="event-hero" style="margin-top:72px;">
+  <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1400&q=85" alt="Cotonou Sound Festival" id="event-hero-img" />
+  <div class="event-hero-overlay"></div>
+  <div class="event-hero-content container">
+    <div style="display:flex; gap:8px; margin-bottom:12px;">
+      <span class="badge badge-hot">🔥 HOT</span>
+      <span class="badge badge-purple">Musique</span>
+      <span class="badge badge-green">Remboursable J-2</span>
+    </div>
+    <h1 style="font-size:clamp(1.6rem,4vw,2.8rem); margin-bottom:8px;" id="event-title">Cotonou Sound Festival</h1>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; color:var(--text-muted); font-size:.9rem;">
+      <span><i class="fa-regular fa-calendar"></i> Vendredi 15 Mars 2025</span>
+      <span><i class="fa-regular fa-clock"></i> 20:00 — 01:00</span>
+      <span><i class="fa-solid fa-location-dot"></i> Stade de l'Amitié, Cotonou</span>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div style="background:var(--dark-2); border-bottom:1px solid var(--card-border); padding:14px 0;">
+  <div class="container" style="display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--text-dim);">
+    <a href="index.html" style="color:var(--text-dim);">Accueil</a>
+    <i class="fa-solid fa-chevron-right" style="font-size:.65rem;"></i>
+    <a href="events.html" style="color:var(--text-dim);">Événements</a>
+    <i class="fa-solid fa-chevron-right" style="font-size:.65rem;"></i>
+    <span style="color:var(--text);">Cotonou Sound Festival</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  <div class="event-layout">
+
+    <!-- LEFT: INFO -->
+    <div>
+      <!-- COUNTDOWN -->
+      <div style="background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(124,58,237,.05)); border:1px solid rgba(124,58,237,.3); border-radius:var(--radius); padding:20px; margin-bottom:32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;" class="reveal">
+        <div>
+          <div style="font-size:.78rem; color:var(--text-dim); margin-bottom:4px;">L'événement commence dans</div>
+          <div style="font-size:1.4rem; font-weight:800; color:var(--primary-light); display:flex; gap:16px;" id="countdown-main">
+            <span>25j</span><span>14h</span><span>32m</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:.78rem; color:var(--text-dim);">Places restantes</div>
+          <div style="font-size:1.2rem; font-weight:700; color:var(--accent);">127 / 4000</div>
+          <div style="height:6px; background:rgba(255,255,255,.08); border-radius:50px; margin-top:6px; width:140px;">
+            <div style="height:100%; width:97%; background:linear-gradient(90deg,var(--success),var(--accent)); border-radius:50px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="reveal">
+        <h2 style="margin-bottom:16px;">À propos de cet événement</h2>
+        <p style="line-height:1.8; margin-bottom:16px;">
+          Le <strong style="color:var(--text);">Cotonou Sound Festival</strong> revient pour une édition spéciale en 2025 ! 
+          Une nuit magique dédiée à la musique africaine contemporaine, avec 8 artistes de renommée nationale et internationale.
+        </p>
+        <p style="line-height:1.8; margin-bottom:24px;">
+          Vivez une expérience musicale unique au cœur du Bénin, avec des performances live époustouflantes, 
+          un marché artisanal, des espaces lounge et une ambiance électrique jusqu'au petit matin.
+        </p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px;">
+          <div class="feature-card" style="flex:1; min-width:180px; padding:16px;">
+            <div style="font-size:1.3rem; margin-bottom:6px;">🎤</div>
+            <div style="font-weight:700; font-size:.9rem;">8 Artistes</div>
+          </div>
+          <div class="feature-card" style="flex:1; min-width:180px; padding:16px;">
+            <div style="font-size:1.3rem; margin-bottom:6px;">👥</div>
+            <div style="font-weight:700; font-size:.9rem;">4 000 places</div>
+          </div>
+          <div class="feature-card" style="flex:1; min-width:180px; padding:16px;">
+            <div style="font-size:1.3rem; margin-bottom:6px;">🍹</div>
+            <div style="font-weight:700; font-size:.9rem;">Bar & Restauration</div>
+          </div>
+          <div class="feature-card" style="flex:1; min-width:180px; padding:16px;">
+            <div style="font-size:1.3rem; margin-bottom:6px;">🅿️</div>
+            <div style="font-weight:700; font-size:.9rem;">Parking inclus</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTISTES -->
+      <div class="reveal">
+        <h2 style="margin-bottom:20px;">Line-up</h2>
+        <div class="artiste-chip"><div class="artiste-avatar">🎵</div><div><div style="font-weight:600; font-size:.95rem;">Zeynab</div><div style="font-size:.8rem; color:var(--text-dim);">Tête d'affiche · 22:00</div></div><span class="badge badge-hot">⭐</span></div>
+        <div class="artiste-chip"><div class="artiste-avatar">🎸</div><div><div style="font-weight:600; font-size:.95rem;">BenMuzik Collective</div><div style="font-size:.8rem; color:var(--text-dim);">21:00</div></div></div>
+        <div class="artiste-chip"><div class="artiste-avatar">🎹</div><div><div style="font-weight:600; font-size:.95rem;">DJ Afro-G</div><div style="font-size:.8rem; color:var(--text-dim);">20:00 — 21:00</div></div></div>
+        <div class="artiste-chip"><div class="artiste-avatar">🎤</div><div><div style="font-weight:600; font-size:.95rem;">Kofi Cotonou</div><div style="font-size:.8rem; color:var(--text-dim);">23:30</div></div></div>
+      </div>
+
+      <!-- LIEU -->
+      <div class="reveal" style="margin-top:40px;">
+        <h2 style="margin-bottom:20px;">Lieu</h2>
+        <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); overflow:hidden;">
+          <div style="height:200px; background:linear-gradient(135deg,var(--dark-2),var(--dark-3)); display:flex; align-items:center; justify-content:center; font-size:3rem;">🗺️</div>
+          <div style="padding:20px;">
+            <div style="font-weight:700; margin-bottom:4px;">Stade de l'Amitié</div>
+            <div style="font-size:.85rem; color:var(--text-muted);">Boulevard de la Marina, Cotonou 01 BP 169</div>
+            <a href="https://maps.google.com" target="_blank" class="btn btn-ghost btn-sm" style="margin-top:12px;">
+              <i class="fa-solid fa-map-marker-alt"></i> Voir sur la carte
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- POLITIQUE -->
+      <div class="reveal" style="margin-top:40px;">
+        <h2 style="margin-bottom:16px;">Politique de remboursement</h2>
+        <div style="background:rgba(16,185,129,.06); border:1px solid rgba(16,185,129,.2); border-radius:var(--radius); padding:20px; display:flex; gap:14px; margin-bottom:12px;">
+          <div style="font-size:1.4rem;">✅</div>
+          <div>
+            <div style="font-weight:600; margin-bottom:4px; color:var(--success);">Remboursement J-2 gratuit</div>
+            <div style="font-size:.85rem; color:var(--text-muted);">Annulez jusqu'à 48h avant le début pour un remboursement intégral et automatique.</div>
+          </div>
+        </div>
+        <div style="background:rgba(245,158,11,.06); border:1px solid rgba(245,158,11,.2); border-radius:var(--radius); padding:20px; display:flex; gap:14px;">
+          <div style="font-size:1.4rem;">🛡️</div>
+          <div>
+            <div style="font-weight:600; margin-bottom:4px; color:var(--accent);">Option Sérénité H-2</div>
+            <div style="font-size:.85rem; color:var(--text-muted);">Ajoutez l'option Sérénité (500 FCFA) pour pouvoir annuler jusqu'à 2h avant l'événement.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: ORDER BOX -->
+    <div>
+      <div class="order-box reveal">
+        <h3 style="margin-bottom:20px;">Choisir mes billets</h3>
+
+        <!-- Ticket types -->
+        <div class="ticket-type-card selected" onclick="selectTicketType(this, 'standard', 5000)">
+          <div class="tt-info"><h4>Standard</h4><p>Accès général — pelouse</p></div>
+          <div class="tt-price"><div class="amount">5 000 FCFA</div></div>
+        </div>
+        <div class="ticket-type-card" onclick="selectTicketType(this, 'vip', 12000)">
+          <div class="tt-info"><h4>VIP</h4><p>Zone VIP + accès lounge</p></div>
+          <div class="tt-price"><div class="amount">12 000 FCFA</div></div>
+        </div>
+        <div class="ticket-type-card" onclick="selectTicketType(this, 'carreor', 25000)">
+          <div class="tt-info"><h4>Carré Or</h4><p>Zone premium · Places assises garanties</p></div>
+          <div class="tt-price"><div class="amount">25 000 FCFA</div></div>
+        </div>
+
+        <!-- Quantity -->
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 0; border-top:1px solid rgba(255,255,255,.06); margin-top:8px;">
+          <span style="font-weight:600;">Nombre de billets</span>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <span class="qty-value" id="qty">1</span>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <!-- Order summary -->
+        <div style="background:rgba(0,0,0,.2); border-radius:var(--radius-sm); padding:16px; margin:16px 0;">
+          <div class="order-line">
+            <span class="label">1× Standard</span>
+            <span id="subtotal">5 000 FCFA</span>
+          </div>
+          <div class="order-line">
+            <span class="label">Frais de service (3%)</span>
+            <span id="fees">150 FCFA</span>
+          </div>
+          <div class="order-line">
+            <span class="label" style="font-weight:700; color:var(--text);">Total</span>
+            <span id="total" style="color:var(--primary-light);">5 150 FCFA</span>
+          </div>
+        </div>
+
+        <!-- Serenite -->
+        <div class="serenite-option">
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size:.9rem; color:var(--accent); margin-bottom:2px;">🛡️ Option Sérénité</div>
+            <div style="font-size:.78rem; color:var(--text-muted);">Remboursable jusqu'à H-2 · +500 FCFA</div>
+          </div>
+          <div class="toggle"></div>
+        </div>
+
+        <button class="btn btn-primary btn-lg" style="width:100%; justify-content:center; margin-top:20px;" onclick="goToPayment()" id="checkout-btn">
+          <i class="fa-solid fa-lock"></i> Réserver maintenant
+        </button>
+        <p style="text-align:center; font-size:.78rem; margin-top:12px; color:var(--text-dim);">
+          <i class="fa-solid fa-shield-halved"></i> Paiement 100% sécurisé · <i class="fa-solid fa-rotate-left"></i> Remboursable
+        </p>
+
+        <!-- Share -->
+        <div style="border-top:1px solid rgba(255,255,255,.06); padding-top:16px; margin-top:16px; display:flex; gap:10px; justify-content:center;">
+          <button class="btn btn-ghost btn-sm" onclick="share()"><i class="fa-solid fa-share-nodes"></i> Partager</button>
+          <button class="btn btn-ghost btn-sm" onclick="toggleWishlist(this, 1)">🤍 Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <a href="index.html" class="nav-logo" style="font-size:1.2rem;"><div class="logo-icon" style="width:28px;height:28px;font-size:.8rem;">🎫</div><span>Your<span class="highlight">Pass</span></span></a>
+      <p>© 2025 YourPass Bénin</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  let currentPrice = 5000;
+  let currentQty = 1;
+  let currentType = 'Standard';
+
+  function selectTicketType(el, type, price) {
+    document.querySelectorAll('.ticket-type-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    currentPrice = price;
+    currentType = el.querySelector('h4').textContent;
+    updateTotal();
+  }
+
+  function changeQty(delta) {
+    currentQty = Math.max(1, Math.min(10, currentQty + delta));
+    document.getElementById('qty').textContent = currentQty;
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const sub = currentPrice * currentQty;
+    const fees = Math.round(sub * 0.03);
+    const total = sub + fees;
+    document.getElementById('subtotal').textContent = sub.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('fees').textContent = fees.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('total').textContent = total.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('total').dataset.base = total;
+
+    // Update order line label
+    const line = document.querySelector('#subtotal').previousElementSibling;
+    if (line) line.textContent = `${currentQty}× ${currentType}`;
+
+    // Store in session for payment page
+    sessionStorage.setItem('yp_order', JSON.stringify({
+      event:    'Cotonou Sound Festival',
+      event_id: 'evt_cotonou_sound_2025',
+      date:     '15 Mars 2025',
+      venue:    "Stade de l'Amitié, Cotonou",
+      type:     currentType,
+      qty:      currentQty,
+      price:    currentPrice,
+      total,
+      fees
+    }));
+  }
+
+  function goToPayment() {
+    updateTotal(); // Garantit que sessionStorage est bien à jour avant redirection
+    window.location.href = 'paiement.html';
+  }
+
+  function share() {
+    if (navigator.share) {
+      navigator.share({ title: 'Cotonou Sound Festival', url: window.location.href });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      showToast('Lien copié !', 'success');
+    }
+  }
+
+  initCountdown(document.getElementById('countdown-main'), '2025-03-15T20:00:00');
+</script>
+</body>
+</html>

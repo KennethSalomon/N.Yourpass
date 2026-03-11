@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion — YourPass Bénin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .auth-visual-content { text-align: center; position: relative; z-index: 1; }
+    .auth-visual::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 10%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(circle, rgba(124,58,237,.35) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .auth-visual::after {
+      content: '';
+      position: absolute;
+      bottom: 15%;
+      right: 15%;
+      width: 40%;
+      height: 40%;
+      background: radial-gradient(circle, rgba(245,158,11,.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .feature-pill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 50px;
+      padding: 10px 18px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    .feature-pill .icon { font-size: 1.2rem; }
+    .feature-pill .text { font-size: .85rem; font-weight: 500; }
+    .social-login { display: flex; gap: 10px; }
+    .social-login-btn {
+      flex: 1;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius-sm);
+      padding: 11px;
+      text-align: center;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .social-login-btn:hover { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); }
+    .pwd-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; color: var(--text-dim); cursor: pointer; font-size: .9rem; }
+    .input-wrap-pass { position: relative; }
+  </style>
+</head>
+<body>
+
+<div class="auth-container" style="min-height:100vh;">
+
+  <!-- LEFT VISUAL -->
+  <div class="auth-visual">
+    <div class="auth-visual-content">
+      <div class="nav-logo" style="font-size:1.8rem; justify-content:center; margin-bottom:48px;">
+        <div class="logo-icon" style="width:44px;height:44px;font-size:1.2rem;">🎫</div>
+        <span>Your<span style="color:var(--accent)">Pass</span></span>
+      </div>
+
+      <h2 style="margin-bottom:16px; font-size:1.8rem;">
+        Vos moments <br><span class="text-gradient">sans limite</span>
+      </h2>
+      <p style="margin-bottom:40px; font-size:.95rem; line-height:1.7; opacity:.8;">
+        La billetterie intelligente du Bénin. Achetez, gérez, revendez — en toute liberté.
+      </p>
+
+      <div style="max-width:300px; margin:0 auto; text-align:left;">
+        <div class="feature-pill"><span class="icon">🔐</span><span class="text">QR codes anti-fraude</span></div>
+        <div class="feature-pill"><span class="icon">💸</span><span class="text">Remboursement J-2 garanti</span></div>
+        <div class="feature-pill"><span class="icon">🔄</span><span class="text">Bourse de revente sécurisée</span></div>
+        <div class="feature-pill"><span class="icon">📊</span><span class="text">Dashboard organisateur temps réel</span></div>
+      </div>
+
+      <!-- DECORATIVE TICKET -->
+      <div style="position:absolute; bottom:40px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:16px 20px; width:260px; text-align:left; backdrop-filter:blur(10px);">
+        <div style="font-size:.72rem; color:rgba(255,255,255,.5); margin-bottom:2px;">🎫 Billet YourPass</div>
+        <div style="font-weight:700; font-size:.9rem; margin-bottom:4px;">Cotonou Sound Festival</div>
+        <div style="font-size:.75rem; color:rgba(255,255,255,.6);">15 Mars 2025 · 20:00 · Standard</div>
+        <div style="margin-top:8px; display:flex; align-items:center; gap:6px;">
+          <span style="width:8px; height:8px; background:var(--success); border-radius:50%; display:inline-block;"></span>
+          <span style="font-size:.72rem; color:var(--success);">Billet valide</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT FORM -->
+  <div class="auth-form-side">
+    <div class="auth-form-wrap">
+
+      <div style="margin-bottom:32px;">
+        <h2 style="margin-bottom:6px;">Bienvenue 👋</h2>
+        <p style="font-size:.9rem;">Connectez-vous ou créez votre compte YourPass.</p>
+      </div>
+
+      <!-- TABS -->
+      <div class="auth-tabs" data-tabs>
+        <div class="auth-tab active" data-tab="login" onclick="switchTab('login')">Se connecter</div>
+        <div class="auth-tab" data-tab="register" onclick="switchTab('register')">Créer un compte</div>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="form-login">
+        <div class="social-login" style="margin-bottom:20px;">
+          <button class="social-login-btn" onclick="socialLogin('Google')">
+            <i class="fa-brands fa-google"></i> Google
+          </button>
+          <button class="social-login-btn" onclick="socialLogin('Facebook')">
+            <i class="fa-brands fa-facebook-f"></i> Facebook
+          </button>
+        </div>
+        <div class="divider"><span>ou avec votre email</span></div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="input-plain" id="login-email" placeholder="koffi@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <div class="input-wrap-pass">
+            <input type="password" class="input-plain" id="login-pwd" placeholder="••••••••" />
+            <button class="pwd-toggle" type="button" onclick="togglePwd('login-pwd', this)">👁</button>
+          </div>
+        </div>
+        <div style="text-align:right; margin-top:-8px; margin-bottom:20px;">
+          <a href="#" style="font-size:.83rem; color:var(--primary-light);">Mot de passe oublié ?</a>
+        </div>
+        <button class="btn btn-primary btn-lg" style="width:100%; justify-content:center;" onclick="handleLogin()">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter
+        </button>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="form-register" style="display:none;">
+        <div class="social-login" style="margin-bottom:20px;">
+          <button class="social-login-btn" onclick="socialLogin('Google')">
+            <i class="fa-brands fa-google"></i> Google
+          </button>
+          <button class="social-login-btn" onclick="socialLogin('Facebook')">
+            <i class="fa-brands fa-facebook-f"></i> Facebook
+          </button>
+        </div>
+        <div class="divider"><span>ou avec votre email</span></div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" class="input-plain" id="reg-prenom" placeholder="Koffi" />
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" class="input-plain" id="reg-nom" placeholder="Mensah" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="input-plain" id="reg-email" placeholder="koffi@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <div style="display:flex; gap:8px;">
+            <select class="input-plain" style="width:90px; flex-shrink:0;">
+              <option>🇧🇯 +229</option>
+              <option>🇳🇬 +234</option>
+              <option>🇨🇮 +225</option>
+            </select>
+            <input type="tel" class="input-plain" placeholder="90 00 00 00" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <div class="input-wrap-pass">
+            <input type="password" class="input-plain" id="reg-pwd" placeholder="Min. 8 caractères" />
+            <button class="pwd-toggle" type="button" onclick="togglePwd('reg-pwd', this)">👁</button>
+          </div>
+        </div>
+
+        <!-- Type de compte -->
+        <div class="form-group">
+          <label>Type de compte</label>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px;">
+            <div class="payment-method active" data-account="user" onclick="selectAccount(this, 'user')">
+              <div class="pm-icon">👤</div>
+              <div style="font-size:.82rem;">Participant</div>
+            </div>
+            <div class="payment-method" data-account="organizer" onclick="selectAccount(this, 'organizer')">
+              <div class="pm-icon">🎪</div>
+              <div style="font-size:.82rem;">Organisateur</div>
+            </div>
+          </div>
+        </div>
+
+        <label class="filter-check" style="font-size:.8rem; color:var(--text-muted); margin-bottom:20px; gap:8px; align-items:flex-start;">
+          <input type="checkbox" id="reg-cgu" style="margin-top:2px;">
+          <span>J'accepte les <a href="#" style="color:var(--primary-light);">Conditions d'utilisation</a> et la <a href="#" style="color:var(--primary-light);">politique de confidentialité</a>.</span>
+        </label>
+
+        <button class="btn btn-accent btn-lg" style="width:100%; justify-content:center;" onclick="doRegister()">
+          <i class="fa-solid fa-user-plus"></i> Créer mon compte
+        </button>
+      </div>
+
+      <p style="text-align:center; font-size:.78rem; color:var(--text-dim); margin-top:28px;">
+        <a href="index.html" style="color:var(--text-dim);"><i class="fa-solid fa-arrow-left"></i> Retour à l'accueil</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+<script>
+  let accountType = 'user';
+
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+    document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+  }
+
+  function togglePwd(id, btn) {
+    const input = document.getElementById(id);
+    if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+    else { input.type = 'password'; btn.textContent = '👁'; }
+  }
+
+  function selectAccount(el, type) {
+    document.querySelectorAll('[data-account]').forEach(e => e.classList.remove('active'));
+    el.classList.add('active');
+    accountType = type;
+  }
+
+  function socialLogin(provider) {
+    showToast(`Connexion via ${provider}...`, 'info');
+    setTimeout(() => {
+      YP.user = { name: 'Utilisateur', email: 'user@gmail.com' };
+      YP.saveUser();
+      showToast('🎉 Connecté avec succès !', 'success');
+      setTimeout(() => window.location.href = 'index.html', 1200);
+    }, 1500);
+  }
+
+  function doRegister() {
+    const cgu = document.getElementById('reg-cgu');
+    if (!cgu.checked) { showToast('Acceptez les CGU pour continuer', 'error'); return; }
+    const prenom = document.getElementById('reg-prenom').value;
+    const email = document.getElementById('reg-email').value;
+    if (!prenom || !email) { showToast('Remplissez tous les champs obligatoires', 'error'); return; }
+    YP.user = { name: prenom, email, type: accountType };
+    YP.saveUser();
+    showToast('🎉 Bienvenue sur YourPass !', 'success');
+    setTimeout(() => window.location.href = accountType === 'organizer' ? 'ads.html' : 'index.html', 1200);
+  }
+</script>
+</body>
+</html>

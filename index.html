@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YourPass Bénin — Billetterie Intelligente</title>
+  <meta name="description" content="La première plateforme de billetterie digitale du Bénin. Achetez, gérez et revendez vos billets en toute sécurité.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div class="page-loader" id="loader">
+  <div class="loader-logo">
+    <span style="color:var(--primary-light)">Your</span><span style="color:var(--accent)">Pass</span>
+  </div>
+  <div class="loader-bar"><div class="loader-bar-inner"></div></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">🎫</div>
+    <span>Your<span class="highlight">Pass</span></span>
+  </a>
+
+  <div class="nav-links">
+    <a href="index.html" class="active">Accueil</a>
+    <a href="events.html">Événements</a>
+    <a href="ads.html">Organisateurs</a>
+    <a href="contact.html">Support</a>
+  </div>
+
+  <div class="nav-actions">
+    <a href="events.html" class="wallet-btn" title="Mon Wallet">
+      <div class="wallet-dot"></div>
+      <i class="fa-solid fa-wallet"></i>
+      <span>Mon Wallet</span>
+    </a>
+    <a href="connexion.html" class="btn btn-primary btn-sm" id="nav-login">Connexion</a>
+    <div id="nav-user" style="display:none; align-items:center; gap:10px;">
+      <span class="username" style="font-size:.85rem; font-weight:600;"></span>
+      <button class="btn btn-ghost btn-sm" onclick="handleLogout()">Déconnexion</button>
+    </div>
+  </div>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="events.html">🎭 Événements</a>
+  <a href="ads.html">📊 Organisateurs</a>
+  <a href="contact.html">💬 Support</a>
+  <a href="connexion.html">🔐 Connexion</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-particles"></div>
+  <div style="position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; width:100%;">
+
+    <div class="hero-badge reveal">
+      <div class="dot"></div>
+      🇧🇯 Première plateforme billetterie du Bénin
+    </div>
+
+    <h1 class="reveal reveal-delay-1">
+      Vos événements, <br>
+      <span class="text-gradient">sans compromis</span>
+    </h1>
+
+    <p class="reveal reveal-delay-2">
+      Achetez vos billets en ligne, recevez votre pass digital avec QR code, 
+      et changez d'avis jusqu'à 48h avant — sans stress, sans perte.
+    </p>
+
+    <!-- SEARCH BAR -->
+    <div class="hero-search reveal reveal-delay-3" style="max-width:680px;">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" placeholder="Concert, festival, théâtre, soirée..." id="search-input" />
+      <button class="btn btn-primary" onclick="window.location.href='events.html?q='+document.getElementById('search-input').value">
+        <i class="fa-solid fa-arrow-right"></i> Rechercher
+      </button>
+    </div>
+
+    <!-- CATEGORY FILTERS -->
+    <div class="hero-filters reveal reveal-delay-4" data-filter-group>
+      <div class="filter-chip active" data-filter="all">🌟 Tous</div>
+      <div class="filter-chip" data-filter="culture">🎭 Culture</div>
+      <div class="filter-chip" data-filter="music">🎵 Musique</div>
+      <div class="filter-chip" data-filter="sport">⚽ Sport</div>
+      <div class="filter-chip" data-filter="business">💼 Business</div>
+      <div class="filter-chip" data-filter="comedy">😂 Humour</div>
+    </div>
+
+    <!-- STATS -->
+    <div class="hero-stats reveal">
+      <div class="hero-stat">
+        <div class="value text-gradient">
+          <span data-count="1200" data-suffix="+">0</span>
+        </div>
+        <div class="label">Billets vendus</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value text-gradient">
+          <span data-count="48" data-suffix="">0</span>
+        </div>
+        <div class="label">Événements actifs</div>
+      </div>
+      <div class="hero-stat">
+        <div class="value text-gradient">
+          <span data-count="100" data-suffix="%">0</span>
+        </div>
+        <div class="label">Sans fraude</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: ÉVÉNEMENTS HOT -->
+<section class="section">
+  <div class="container">
+    <div class="section-header flex-between">
+      <div>
+        <div class="overline">🔥 À ne pas manquer</div>
+        <h2>Événements Hot</h2>
+        <p>Les plus attendus du moment</p>
+      </div>
+      <a href="events.html" class="btn btn-outline">
+        Voir tout <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+
+     <div>
+        <div class="events-header">
+          <span class="results-count" id="results-count">48 événements trouvés</span>
+          <select class="sort-select" id="sort-select">
+            <option value="date">Trier par date</option>
+            <option value="price-asc">Prix croissant</option>
+            <option value="price-desc">Prix décroissant</option>
+            <option value="popular">Popularité</option>
+          </select>
+        </div>
+
+        <div class="active-filters" id="active-filters">
+          <div class="active-filter-tag">Cotonou <button onclick="this.parentElement.remove()">×</button></div>
+          <div class="active-filter-tag">Cette semaine <button onclick="this.parentElement.remove()">×</button></div>
+        </div>
+
+        <div class="events-grid" id="events-grid">
+
+          <div class="event-card reveal" data-category="music" data-title="Cotonou Sound Festival" onclick="window.location.href='event-detail.html?id=1'">
+            <div class="event-card-img">
+              <img src="image video/eat.png" alt="" />
+              <div class="overlay"></div>
+              <div class="badges"><span class="badge badge-hot">🔥 HOT</span></div>
+              <div class="wishlist" onclick="event.stopPropagation(); toggleWishlist(this,1)">🤍</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-meta"><span><i class="fa-regular fa-calendar"></i> 15 Mars 2025</span><span><i class="fa-regular fa-clock"></i> 20:00</span></div>
+              <div class="event-card-title">Cotonou Sound Festival</div>
+              <div class="event-card-location"><i class="fa-solid fa-location-dot"></i> Stade de l'Amitié</div>
+              <div class="event-card-footer">
+                <div class="event-card-price"><span class="amount">5 000</span><span class="currency"> FCFA</span></div>
+                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); YP.addToCart({id:1, title:'Cotonou Sound Festival', price:5000})"><i class="fa-solid fa-plus"></i> Réserver</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card reveal reveal-delay-1" data-category="business" data-title="Bénin Innovation Summit" onclick="window.location.href='event-detail.html?id=2'">
+            <div class="event-card-img">
+              <img src="image video/eatdrink.jpeg" alt="" />
+              <div class="overlay"></div>
+              <div class="badges"><span class="badge badge-gold">Business</span></div>
+              <div class="wishlist" onclick="event.stopPropagation(); toggleWishlist(this,2)">🤍</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-meta"><span><i class="fa-regular fa-calendar"></i> 22 Fév 2025</span></div>
+              <div class="event-card-title">Bénin Innovation Summit 2025</div>
+              <div class="event-card-location"><i class="fa-solid fa-location-dot"></i> Palais des Congrès</div>
+              <div class="event-card-footer">
+                <div class="event-card-price"><span class="amount">15 000</span><span class="currency"> FCFA</span></div>
+                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); YP.addToCart({id:2, title:'Bénin Innovation Summit', price:15000})"><i class="fa-solid fa-plus"></i> Réserver</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card reveal reveal-delay-2" data-category="comedy" data-title="Grand Gala du Rire" onclick="window.location.href='event-detail.html?id=3'">
+            <div class="event-card-img">
+              <img src="image video/vodun.jpeg" alt="" />
+              <div class="overlay"></div>
+              <div class="badges"><span class="badge badge-purple">Humour</span></div>
+              <div class="wishlist" onclick="event.stopPropagation(); toggleWishlist(this,3)">🤍</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-meta"><span><i class="fa-regular fa-calendar"></i> 8 Mars 2025</span></div>
+              <div class="event-card-title">Grand Gala du Rire — Édition Féminine</div>
+              <div class="event-card-location"><i class="fa-solid fa-location-dot"></i> Cité Lacustre, Ganvié</div>
+              <div class="event-card-footer">
+                <div class="event-card-price"><span class="amount">3 000</span><span class="currency"> FCFA</span></div>
+                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); YP.addToCart({id:3, title:'Grand Gala du Rire', price:3000})"><i class="fa-solid fa-plus"></i> Réserver</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card reveal" data-category="culture" data-title="Vodoun Days" onclick="window.location.href='event-detail.html?id=4'">
+            <div class="event-card-img">
+              <img src="image video/vodun1.jpeg" alt="" />
+              <div class="overlay"></div>
+              <div class="badges"><span class="badge badge-green">Gratuit</span></div>
+              <div class="wishlist" onclick="event.stopPropagation(); toggleWishlist(this,4)">🤍</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-meta"><span><i class="fa-regular fa-calendar"></i> 10 Jan 2025</span></div>
+              <div class="event-card-title">Vodoun Days — Abomey</div>
+              <div class="event-card-location"><i class="fa-solid fa-location-dot"></i> Abomey, Bénin</div>
+              <div class="event-card-footer">
+                <div class="event-card-price"><span class="free">Gratuit</span></div>
+                <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); YP.addToCart({id:4, title:'Vodoun Days', price:0})">S'inscrire</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card reveal reveal-delay-1" data-category="sport" data-title="Match Bénin" onclick="window.location.href='event-detail.html?id=5'">
+            <div class="event-card-img">
+              <img src="image video/vodun2.jpeg" alt="" />
+              <div class="overlay"></div>
+              <div class="badges"><span class="badge badge-purple">Sport</span></div>
+              <div class="wishlist" onclick="event.stopPropagation(); toggleWishlist(this,5)">🤍</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-meta"><span><i class="fa-regular fa-calendar"></i> 5 Avr 2025</span></div>
+              <div class="event-card-title">Match des Écureuils — CAN Qualifier</div>
+              <div class="event-card-location"><i class="fa-solid fa-location-dot"></i> Stade Charles de Gaulle</div>
+              <div class="event-card-footer">
+                <div class="event-card-price"><span class="amount">2 000</span><span class="currency"> FCFA</span></div>
+                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); YP.addToCart({id:5, title:'Match Écureuils', price:2000})"><i class="fa-solid fa-plus"></i> Réserver</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="event-card reveal reveal-delay-2" data-category="music" data-title="Afrobeat Night" onclick="window.location.href='event-detail.html?id=6'">
+            <div class="event-card-img">
+              <img src="image video/welove3.jpeg" alt="" />
+              <div class="overlay"></div>
+              <div class="badges"><span class="badge badge-purple">Musique</span></div>
+              <div class="wishlist" onclick="event.stopPropagation(); toggleWishlist(this,6)">🤍</div>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-meta"><span><i class="fa-regular fa-calendar"></i> 28 Fév 2025</span></div>
+              <div class="event-card-title">Afrobeat Night — Open Air</div>
+              <div class="event-card-location"><i class="fa-solid fa-location-dot"></i> Plage de Fidjrossè, Cotonou</div>
+              <div class="event-card-footer">
+                <div class="event-card-price"><span class="amount">4 000</span><span class="currency"> FCFA</span></div>
+                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); YP.addToCart({id:6, title:'Afrobeat Night', price:4000})"><i class="fa-solid fa-plus"></i> Réserver</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="load-more">
+          <button class="btn btn-ghost btn-lg" onclick="loadMoreEvents()">
+            <i class="fa-solid fa-plus"></i> Charger plus d'événements
+          </button>
+        </div>
+      </div>
+  </div>
+</section>
+
+<!-- SECTION: CATÉGORIES -->
+<section class="section" style="background:var(--dark-2); border-top:1px solid var(--card-border); border-bottom:1px solid var(--card-border);">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <div class="overline">Explorer par thème</div>
+      <h2>Toutes les Catégories</h2>
+      <p>Des concerts aux salons professionnels, YourPass centralise tout.</p>
+    </div>
+
+    <div class="categories-grid">
+      <div class="cat-card reveal" onclick="window.location.href='events.html?cat=music'">
+        <div class="cat-icon" style="background:linear-gradient(135deg,rgba(139,92,246,.3),rgba(139,92,246,.1));">🎵</div>
+        <div class="cat-name">Musique</div>
+        <div class="cat-count">12 événements</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-1" onclick="window.location.href='events.html?cat=culture'">
+        <div class="cat-icon" style="background:linear-gradient(135deg,rgba(245,158,11,.3),rgba(245,158,11,.1));">🎭</div>
+        <div class="cat-name">Culture & Art</div>
+        <div class="cat-count">8 événements</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-2" onclick="window.location.href='events.html?cat=sport'">
+        <div class="cat-icon" style="background:linear-gradient(135deg,rgba(16,185,129,.3),rgba(16,185,129,.1));">⚽</div>
+        <div class="cat-name">Sport</div>
+        <div class="cat-count">5 événements</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-3" onclick="window.location.href='events.html?cat=business'">
+        <div class="cat-icon" style="background:linear-gradient(135deg,rgba(59,130,246,.3),rgba(59,130,246,.1));">💼</div>
+        <div class="cat-name">Business</div>
+        <div class="cat-count">9 événements</div>
+      </div>
+      <div class="cat-card reveal reveal-delay-4" onclick="window.location.href='events.html?cat=comedy'">
+        <div class="cat-icon" style="background:linear-gradient(135deg,rgba(236,72,153,.3),rgba(236,72,153,.1));">😂</div>
+        <div class="cat-name">Humour</div>
+        <div class="cat-count">4 événements</div>
+      </div>
+      <div class="cat-card reveal" onclick="window.location.href='events.html?cat=religion'">
+        <div class="cat-icon" style="background:linear-gradient(135deg,rgba(251,191,36,.3),rgba(251,191,36,.1));">🙏</div>
+        <div class="cat-name">Spiritualité</div>
+        <div class="cat-count">6 événements</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: PROPOSITION DE VALEUR -->
+<section class="section">
+  <div class="container">
+    <div class="section-header centered reveal">
+      <div class="overline">Pourquoi YourPass ?</div>
+      <h2>La Flexibilité <span class="text-gradient">Absolue</span></h2>
+      <p>Nous avons repensé la billetterie pour éliminer le stress et les risques.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔐</div>
+        <h3>QR Code Anti-Fraude</h3>
+        <p>Chaque billet génère un QR code unique et crypté. Zéro risque de copie ou de contrefaçon à l'entrée.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">💸</div>
+        <h3>Remboursement J-2</h3>
+        <p>Changement d'avis ? Remboursement automatique et intégral jusqu'à 48h avant l'événement. Sans question.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">🛡️</div>
+        <h3>Option Sérénité H-2</h3>
+        <p>Pour encore plus de liberté, souscrivez à notre micro-assurance à 500 FCFA : remboursable jusqu'à 2h avant.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon">🔄</div>
+        <h3>Bourse de Revente</h3>
+        <p>Vous ne pouvez plus y aller ? Revendez votre billet sur notre marketplace sécurisée à un autre fan.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">📊</div>
+        <h3>Dashboard Organisateur</h3>
+        <p>Suivi des ventes en temps réel, statistiques détaillées, et contrôle d'accès digitalisé le jour J.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">📱</div>
+        <h3>100% Mobile</h3>
+        <p>Vos billets dans votre wallet, accessibles même hors connexion. Montrez le QR code et entrez.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: BOURSE DE REVENTE -->
+<section class="section" style="background:var(--dark-2); border-top:1px solid var(--card-border); border-bottom:1px solid var(--card-border);">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="overline">🔄 Dernière minute</div>
+      <h2>Bourse aux Billets</h2>
+      <p>Des places disponibles à la revente par d'autres utilisateurs.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+
+      <div class="bourse-card reveal">
+        <div style="flex:1;">
+          <div style="font-weight:700; margin-bottom:4px;">Cotonou Sound Festival</div>
+          <div style="font-size:.85rem; color:var(--text-dim);">1 place · Cat. VIP · 15 Mars</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:1.1rem; font-weight:800; color:var(--accent);">5 500 FCFA</div>
+          <div style="font-size:.75rem; color:var(--text-dim);">Original: 5 000 FCFA</div>
+        </div>
+        <button class="btn btn-accent btn-sm">Acheter</button>
+      </div>
+
+      <div class="bourse-card reveal reveal-delay-1">
+        <div style="flex:1;">
+          <div style="font-weight:700; margin-bottom:4px;">Bénin Innovation Summit</div>
+          <div style="font-size:.85rem; color:var(--text-dim);">2 places · Standard · 22 Fév</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:1.1rem; font-weight:800; color:var(--accent);">14 000 FCFA</div>
+          <div style="font-size:.75rem; color:var(--text-dim);">Original: 15 000 FCFA</div>
+        </div>
+        <button class="btn btn-accent btn-sm">Acheter</button>
+      </div>
+
+      <div class="bourse-card reveal reveal-delay-2">
+        <div style="flex:1;">
+          <div style="font-weight:700; margin-bottom:4px;">Grand Gala du Rire</div>
+          <div style="font-size:.85rem; color:var(--text-dim);">1 place · Standard · 8 Mars</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:1.1rem; font-weight:800; color:var(--accent);">2 800 FCFA</div>
+          <div style="font-size:.75rem; color:var(--text-dim);">Original: 3 000 FCFA</div>
+        </div>
+        <button class="btn btn-accent btn-sm">Acheter</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: CTA ORGANISATEURS -->
+<section class="section">
+  <div class="container">
+    <div style="background:linear-gradient(135deg, var(--dark-3), var(--dark-2)); border:1px solid var(--card-border); border-radius:32px; padding:64px; text-align:center; position:relative; overflow:hidden;" class="reveal">
+      <div style="position:absolute; top:-60px; right:-60px; width:200px; height:200px; background:radial-gradient(circle, rgba(124,58,237,.2), transparent); border-radius:50%;"></div>
+      <div style="position:absolute; bottom:-60px; left:-60px; width:200px; height:200px; background:radial-gradient(circle, rgba(245,158,11,.1), transparent); border-radius:50%;"></div>
+      <div style="position:relative; z-index:1;">
+        <div class="badge badge-gold" style="margin-bottom:24px;">📊 Pour les organisateurs</div>
+        <h2 style="margin-bottom:16px;">Gérez vos événements <span class="text-gradient">comme un pro</span></h2>
+        <p style="max-width:520px; margin:0 auto 36px; font-size:1rem; line-height:1.7;">
+          Dashboard temps réel, contrôle d'entrée QR, statistiques de ventes, paiements sécurisés — 
+          tout ce qu'il faut pour organiser un événement réussi au Bénin.
+        </p>
+        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+          <a href="ads.html" class="btn btn-accent btn-lg">
+            <i class="fa-solid fa-rocket"></i> Publier mon événement
+          </a>
+          <a href="contact.html" class="btn btn-ghost btn-lg">
+            En savoir plus
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.4rem;">
+          <div class="logo-icon">🎫</div>
+          <span>Your<span class="highlight">Pass</span></span>
+        </a>
+        <p>La première plateforme de billetterie intelligente du Bénin. Achetez, gérez et revendez vos billets en toute liberté.</p>
+        <div class="socials">
+          <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="#" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+        <div class="footer-support">
+          <a href="https://wa.me/22900000000" class="support-btn whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="tel:+22900000000" class="support-btn call">
+            <i class="fa-solid fa-phone"></i> Appeler
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Plateforme</h5>
+        <a href="events.html">Événements</a>
+        <a href="events.html#bourse">Bourse aux billets</a>
+        <a href="ads.html">Espace organisateur</a>
+        <a href="#wallet">Mon Wallet</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Catégories</h5>
+        <a href="events.html?cat=music">Musique</a>
+        <a href="events.html?cat=culture">Culture</a>
+        <a href="events.html?cat=business">Business</a>
+        <a href="events.html?cat=sport">Sport</a>
+        <a href="events.html?cat=comedy">Humour</a>
+      </div>
+
+      <div class="footer-col">
+        <h5>Légal & Support</h5>
+        <a href="contact.html">Nous contacter</a>
+        <a href="#">Conditions d'utilisation</a>
+        <a href="#">Politique de remboursement</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">FAQ</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 YourPass Bénin. Tous droits réservés.</p>
+      <p>🇧🇯 Fait avec ❤️ au Bénin</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  // Init countdown
+  const cdown = document.getElementById('cdown-1');
+  if (cdown) initCountdown(cdown, cdown.dataset.countdown);
+</script>
+</body>
+</html>

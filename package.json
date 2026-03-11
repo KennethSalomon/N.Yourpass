@@ -1,0 +1,12 @@
+{
+  "name": "yourpass-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.97.0",
+    "@vercel/analytics": "^1.6.1",
+    "axios": "^1.13.4",
+    "qrcode": "^1.5.4",
+    "resend": "^6.9.3"
+  }
+}

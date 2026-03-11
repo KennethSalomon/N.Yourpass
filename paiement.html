@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Billet Confirmé — YourPass Bénin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ticket-visual {
+      background: linear-gradient(135deg, var(--dark-2), var(--dark-3));
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      overflow: hidden;
+      max-width: 400px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .ticket-visual::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -16px;
+      width: 32px;
+      height: 32px;
+      background: var(--dark);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .ticket-visual::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -16px;
+      width: 32px;
+      height: 32px;
+      background: var(--dark);
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .ticket-top {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ticket-top::before {
+      content: '';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(124,58,237,.3), transparent);
+      border-radius: 50%;
+    }
+    .ticket-divider {
+      border: none;
+      border-top: 2px dashed rgba(255,255,255,.12);
+      margin: 0 16px;
+    }
+    .ticket-bottom {
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .ticket-info-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .ticket-info-item .ti-label {
+      font-size: .7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 2px;
+    }
+    .ticket-info-item .ti-value {
+      font-size: .88rem;
+      font-weight: 700;
+    }
+    .confetti { position: fixed; pointer-events: none; z-index: 9998; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR MINIMAL -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">🎫</div><span>Your<span class="highlight">Pass</span></span></a>
+  <div class="nav-actions">
+    <a href="index.html" class="btn btn-ghost btn-sm">Retour à l'accueil</a>
+  </div>
+</nav>
+
+<!-- SUCCESS PAGE -->
+<div class="success-container">
+  <div style="width:100%; max-width:560px; text-align:center;">
+
+    <!-- Success check -->
+    <div class="success-check">✅</div>
+
+    <div class="badge badge-green" style="margin-bottom:16px;">Billet confirmé !</div>
+    <h1 style="font-size:2rem; margin-bottom:12px;">Vous êtes inscrit ! 🎉</h1>
+    <p style="font-size:1rem; line-height:1.7; max-width:400px; margin:0 auto 36px;">
+      Votre billet a été généré. Présentez le QR code à l'entrée — et profitez bien !
+    </p>
+
+    <!-- TICKET -->
+    <div class="ticket-visual reveal">
+      <div class="ticket-top">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+          <div class="nav-logo" style="font-size:1rem;">
+            <div class="logo-icon" style="width:26px;height:26px;font-size:.7rem;">🎫</div>
+            <span>Your<span style="color:var(--accent)">Pass</span></span>
+          </div>
+          <span class="badge badge-purple">Standard</span>
+        </div>
+        <div style="font-size:1.25rem; font-weight:800; margin-bottom:6px;" id="ticket-event">Cotonou Sound Festival</div>
+        <div style="font-size:.85rem; color:var(--text-muted); margin-bottom:20px;">Édition Spéciale 2025</div>
+        <div class="ticket-info-row">
+          <div class="ticket-info-item">
+            <div class="ti-label">Date</div>
+            <div class="ti-value">15 Mars 2025</div>
+          </div>
+          <div class="ticket-info-item">
+            <div class="ti-label">Heure</div>
+            <div class="ti-value">20:00</div>
+          </div>
+          <div class="ticket-info-item">
+            <div class="ti-label">Lieu</div>
+            <div class="ti-value">Stade de l'Amitié</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="ticket-divider">
+
+      <div class="ticket-bottom">
+        <!-- QR CODE -->
+        <div style="flex-shrink:0;">
+          <div id="ticket-qr" data-qr="YP-EVT001-USR42-STD-2025" style="width:110px; height:110px;"></div>
+        </div>
+        <div style="flex:1; text-align:left;">
+          <div style="font-size:.7rem; color:var(--text-dim); margin-bottom:2px; text-transform:uppercase; letter-spacing:.5px;">Référence</div>
+          <div style="font-size:.88rem; font-weight:700; font-family:monospace; color:var(--primary-light); margin-bottom:12px;">YP-EVT001-USR42-STD</div>
+          <div style="font-size:.7rem; color:var(--text-dim); margin-bottom:2px; text-transform:uppercase; letter-spacing:.5px;">Titulaire</div>
+          <div style="font-size:.88rem; font-weight:600;">Koffi Mensah</div>
+          <div style="margin-top:10px;">
+            <span class="badge badge-green" style="font-size:.7rem;">✅ Valide</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px;">
+      <button class="btn btn-primary btn-lg" onclick="downloadTicket()">
+        <i class="fa-solid fa-download"></i> Télécharger
+      </button>
+      <button class="btn btn-ghost btn-lg" onclick="shareTicket()">
+        <i class="fa-solid fa-share-nodes"></i> Partager
+      </button>
+    </div>
+
+    <!-- INFO BOXES -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:28px;">
+      <div style="background:rgba(16,185,129,.06); border:1px solid rgba(16,185,129,.2); border-radius:12px; padding:16px; text-align:left;">
+        <div style="font-size:1.2rem; margin-bottom:6px;">📧</div>
+        <div style="font-size:.82rem; font-weight:600; margin-bottom:4px;">Email envoyé</div>
+        <div style="font-size:.75rem; color:var(--text-dim);">Votre billet est dans votre boîte mail.</div>
+      </div>
+      <div style="background:rgba(124,58,237,.06); border:1px solid rgba(124,58,237,.2); border-radius:12px; padding:16px; text-align:left;">
+        <div style="font-size:1.2rem; margin-bottom:6px;">💼</div>
+        <div style="font-size:.82rem; font-weight:600; margin-bottom:4px;">Dans votre Wallet</div>
+        <div style="font-size:.75rem; color:var(--text-dim);">Retrouvez ce billet dans Mon Wallet.</div>
+      </div>
+    </div>
+
+    <!-- REMBOURSEMENT RAPPEL -->
+    <div style="background:rgba(245,158,11,.06); border:1px solid rgba(245,158,11,.2); border-radius:12px; padding:16px 20px; margin-top:16px; display:flex; gap:12px; align-items:flex-start; text-align:left;">
+      <div style="font-size:1.2rem; flex-shrink:0;">💡</div>
+      <div>
+        <div style="font-size:.85rem; font-weight:600; color:var(--accent); margin-bottom:4px;">Rappel — Remboursement J-2</div>
+        <div style="font-size:.78rem; color:var(--text-muted);">Vous pouvez annuler et obtenir un remboursement intégral jusqu'au <strong style="color:var(--text);">13 Mars 2025 à minuit</strong>.</div>
+      </div>
+    </div>
+
+    <!-- BACK -->
+    <div style="margin-top:32px;">
+      <a href="events.html" class="btn btn-ghost">
+        <i class="fa-solid fa-calendar"></i> Découvrir d'autres événements
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+<script>
+  // ══════════════════════════════════════════════════════════════
+  //  SUCCESS PAGE — Données dynamiques depuis FedaPay + session
+  // ══════════════════════════════════════════════════════════════
+
+  // 1. Lire les paramètres retournés par FedaPay dans l'URL
+  const params     = new URLSearchParams(window.location.search);
+  const txId       = params.get('id')     || sessionStorage.getItem('yp_pending_tx') || '';
+  const txStatus   = params.get('status') || '';
+
+  // 2. Lire les données client sauvegardées avant la redirection
+  const customer   = JSON.parse(sessionStorage.getItem('yp_customer') || '{}');
+  const order      = JSON.parse(sessionStorage.getItem('yp_order')    || '{}');
+
+  // 3. Générer un ID billet unique lisible
+  const ticketRef  = txId
+    ? 'YP-' + txId.toString().slice(-6).toUpperCase()
+    : 'YP-' + Date.now().toString(36).toUpperCase().slice(-6);
+
+  // ── Paiement annulé ou échoué ? ────────────────────────────────
+  if (txStatus && txStatus !== 'approved' && txStatus !== 'paid') {
+    document.querySelector('.success-check').textContent = '❌';
+    document.querySelector('.badge.badge-green').textContent = 'Paiement non validé';
+    document.querySelector('h1').textContent = 'Paiement non finalisé';
+    document.querySelector('.success-container p').textContent =
+      'Le paiement a été annulé ou refusé. Aucun montant n\'a été débité. Vous pouvez réessayer.';
+  }
+
+  // ── Remplir les éléments du ticket ─────────────────────────────
+  const eventName  = customer.event      || order.event      || 'Votre événement';
+  const eventDate  = customer.eventDate  || order.date       || '—';
+  const eventVenue = customer.eventVenue || order.venue      || 'Cotonou, Bénin';
+  const ticketType = customer.ticketType || order.type       || 'Standard';
+  const holderName = [customer.firstname, customer.lastname].filter(Boolean).join(' ') || 'Titulaire';
+  const amount     = customer.amount     || order.total      || 0;
+
+  // Nom de l'événement dans le ticket
+  const ticketEventEl = document.getElementById('ticket-event');
+  if (ticketEventEl) ticketEventEl.textContent = eventName;
+
+  // Référence
+  document.querySelector('[style*="font-family:monospace"], .ticket-bottom [style*="monospace"]')
+    ?.querySelectorAll('div')
+    .forEach(el => { if (el.textContent.includes('YP-EVT001')) el.textContent = ticketRef; });
+
+  // Titulaire
+  const holderEls = document.querySelectorAll('.ticket-bottom div');
+  holderEls.forEach(el => {
+    if (el.textContent.trim() === 'Koffi Mensah') el.textContent = holderName;
+  });
+
+  // Type de billet (badge)
+  const typeBadge = document.querySelector('.ticket-top .badge-purple');
+  if (typeBadge) typeBadge.textContent = ticketType;
+
+  // Infos date / lieu dans le ticket
+  const tiValues = document.querySelectorAll('.ti-value');
+  if (tiValues[0]) tiValues[0].textContent = eventDate  || '—';
+  if (tiValues[2]) tiValues[2].textContent = eventVenue || '—';
+
+  // Remplir avec les valeurs du DOM (pour le partage)
+  document.title = `Billet ${eventName} — YourPass`;
+
+  // ── Générer le QR Code avec les vraies données ──────────────────
+  const qrEl = document.getElementById('ticket-qr');
+  if (qrEl) {
+    const qrData = JSON.stringify({ ref: ticketRef, tx: txId, ev: eventName, holder: holderName });
+    qrEl.dataset.qr = qrData;
+    generateQRCode(qrEl, qrData);
+  }
+
+  // Mettre à jour la référence textuelle sous le QR
+  const refTextEl = document.querySelector('.ticket-bottom [style*="primary-light"]');
+  if (refTextEl) refTextEl.textContent = ticketRef;
+
+  // ── Appel API send-ticket (envoyer le billet par email) ─────────
+  async function sendTicketEmail() {
+    if (!customer.email || !txId) return; // Pas d'email ou pas de TX → skip
+    try {
+      const res = await fetch('/api/send-ticket', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          transactionId: txId,
+          email:         customer.email,
+          name:          holderName,
+          eventName,
+          eventDate,
+          eventVenue,
+          ticketType,
+          amount
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        const emailBox = document.querySelector('[style*="rgba(16,185,129"]');
+        if (emailBox) {
+          emailBox.querySelector('[style*="font-size:.75rem"]').textContent =
+            `Billet envoyé à ${customer.email}`;
+        }
+      }
+    } catch (err) {
+      console.warn('[YourPass] Email non envoyé:', err.message);
+    }
+  }
+
+  // Nettoyer sessionStorage après usage
+  sessionStorage.removeItem('yp_pending_tx');
+  sessionStorage.removeItem('yp_customer');
+
+  // ── Confettis ───────────────────────────────────────────────────
+  function launchConfetti() {
+    const colors = ['#7C3AED', '#A78BFA', '#F59E0B', '#10B981', '#EC4899'];
+    for (let i = 0; i < 60; i++) {
+      const div = document.createElement('div');
+      div.className = 'confetti';
+      const size = 6 + Math.random() * 8;
+      div.style.cssText = `
+        left: ${Math.random() * 100}vw; top: -20px;
+        width: ${size}px; height: ${size}px;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        animation: confetti-fall ${2 + Math.random() * 3}s ease-in ${Math.random() * 1.5}s forwards;
+        opacity: 0.9; transform: rotate(${Math.random() * 360}deg);
+      `;
+      document.body.appendChild(div);
+      setTimeout(() => div.remove(), 6000);
+    }
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes confetti-fall {
+      0%   { transform: translateY(0) rotate(0deg);    opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Ne lancer confettis que si paiement validé
+  if (!txStatus || txStatus === 'approved' || txStatus === 'paid') {
+    setTimeout(launchConfetti, 1200);
+    sendTicketEmail();
+  }
+
+  // ── Actions ─────────────────────────────────────────────────────
+  function downloadTicket() {
+    showToast('Téléchargement en cours...', 'info');
+    setTimeout(() => showToast('Billet téléchargé ! 🎫', 'success'), 1500);
+  }
+
+  function shareTicket() {
+    const text = `Mon billet pour ${eventName} — YourPass 🎫`;
+    if (navigator.share) {
+      navigator.share({ title: 'Mon billet YourPass', text, url: window.location.href });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      showToast('Lien copié !', 'success');
+    }
+  }
+</script>
+</body>
+</html>

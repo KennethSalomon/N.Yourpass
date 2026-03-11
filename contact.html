@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — YourPass Bénin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-header { padding: 120px 0 60px; background: linear-gradient(180deg, var(--dark-2) 0%, var(--dark) 100%); border-bottom: 1px solid var(--card-border); }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,.06); }
+    .faq-question { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; cursor: pointer; font-weight: 600; transition: var(--transition); }
+    .faq-question:hover { color: var(--primary-light); }
+    .faq-answer { overflow: hidden; max-height: 0; transition: max-height 0.4s ease, padding 0.4s ease; font-size: .9rem; line-height: 1.7; color: var(--text-muted); }
+    .faq-item.open .faq-answer { max-height: 200px; padding-bottom: 16px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--primary-light); }
+    .faq-icon { transition: transform 0.3s ease; color: var(--text-dim); font-size: 1.1rem; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- PAGE LOADER -->
+<div class="page-loader"><div class="loader-logo"><span style="color:var(--primary-light)">Your</span><span style="color:var(--accent)">Pass</span></div><div class="loader-bar"><div class="loader-bar-inner"></div></div></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><div class="logo-icon">🎫</div><span>Your<span class="highlight">Pass</span></span></a>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="events.html">Événements</a>
+    <a href="ads.html">Organisateurs</a>
+    <a href="contact.html" class="active">Support</a>
+  </div>
+  <div class="nav-actions">
+    <a href="#" class="wallet-btn"><div class="wallet-dot"></div><i class="fa-solid fa-wallet"></i> Mon Wallet</a>
+    <a href="connexion.html" class="btn btn-primary btn-sm">Connexion</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-nav">
+  <a href="index.html">🏠 Accueil</a>
+  <a href="events.html">🎭 Événements</a>
+  <a href="ads.html">📊 Organisateurs</a>
+  <a href="contact.html">💬 Support</a>
+  <a href="connexion.html">🔐 Connexion</a>
+</div>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="container" style="text-align:center;">
+    <div class="badge badge-purple" style="margin-bottom:20px;">💬 Support local</div>
+    <h1>Comment pouvons-nous<br><span class="text-gradient">vous aider ?</span></h1>
+    <p style="margin:16px auto 36px; max-width:480px; font-size:1rem; line-height:1.7;">
+      Notre équipe béninoise est disponible 7j/7 pour vous accompagner.
+    </p>
+
+    <!-- SEARCH FAQ -->
+    <div class="hero-search" style="max-width:480px; margin:0 auto;">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" placeholder="Rechercher dans la FAQ..." id="faq-search" oninput="filterFaq(this.value)" />
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT CHANNELS -->
+<section class="section-sm">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:20px; margin-bottom:64px;">
+
+      <a href="https://wa.me/22900000000" target="_blank" class="card" style="padding:28px; text-align:center; text-decoration:none;">
+        <div style="width:56px; height:56px; background:rgba(37,211,102,.12); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 16px;">
+          <i class="fa-brands fa-whatsapp" style="color:#25D166;"></i>
+        </div>
+        <h3 style="margin-bottom:6px; font-size:1rem;">WhatsApp</h3>
+        <p style="font-size:.85rem;">Réponse en moins de 5 minutes</p>
+        <div class="btn btn-ghost btn-sm" style="margin-top:16px; width:100%; justify-content:center;">
+          Écrire sur WhatsApp
+        </div>
+      </a>
+
+      <a href="tel:+22900000000" class="card" style="padding:28px; text-align:center; text-decoration:none;">
+        <div style="width:56px; height:56px; background:rgba(124,58,237,.12); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 16px;">
+          <i class="fa-solid fa-phone" style="color:var(--primary-light);"></i>
+        </div>
+        <h3 style="margin-bottom:6px; font-size:1rem;">Appel direct</h3>
+        <p style="font-size:.85rem;">Lun–Ven · 8h–20h</p>
+        <div class="btn btn-ghost btn-sm" style="margin-top:16px; width:100%; justify-content:center;">
+          +229 00 00 00 00
+        </div>
+      </a>
+
+      <div class="card" style="padding:28px; text-align:center;">
+        <div style="width:56px; height:56px; background:rgba(245,158,11,.12); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 16px;">
+          <i class="fa-solid fa-envelope" style="color:var(--accent);"></i>
+        </div>
+        <h3 style="margin-bottom:6px; font-size:1rem;">Email</h3>
+        <p style="font-size:.85rem;">Réponse sous 24h</p>
+        <div class="btn btn-ghost btn-sm" style="margin-top:16px; width:100%; justify-content:center;">
+          support@yourpass.bj
+        </div>
+      </div>
+
+      <div class="card" style="padding:28px; text-align:center;">
+        <div style="width:56px; height:56px; background:rgba(16,185,129,.12); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:1.5rem; margin:0 auto 16px;">
+          <i class="fa-brands fa-instagram" style="color:#EC4899;"></i>
+        </div>
+        <h3 style="margin-bottom:6px; font-size:1rem;">Instagram / TikTok</h3>
+        <p style="font-size:.85rem;">@YourPassBenin</p>
+        <a href="#" class="btn btn-ghost btn-sm" style="margin-top:16px; width:100%; justify-content:center;">
+          Nous suivre
+        </a>
+      </div>
+    </div>
+
+    <!-- CONTACT GRID -->
+    <div class="contact-grid">
+
+      <!-- FORM -->
+      <div class="reveal">
+        <h2 style="margin-bottom:8px;">Envoyer un message</h2>
+        <p style="margin-bottom:28px; font-size:.9rem;">Décrivez votre problème et nous vous répondrons rapidement.</p>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div class="form-group"><label>Prénom *</label><input type="text" class="input-plain" placeholder="Koffi" /></div>
+          <div class="form-group"><label>Nom *</label><input type="text" class="input-plain" placeholder="Mensah" /></div>
+        </div>
+        <div class="form-group"><label>Email *</label><input type="email" class="input-plain" placeholder="koffi@email.com" /></div>
+        <div class="form-group">
+          <label>Sujet *</label>
+          <select class="input-plain">
+            <option value="">Choisissez un sujet</option>
+            <option>Remboursement de billet</option>
+            <option>Problème avec mon QR code</option>
+            <option>Revente de billet</option>
+            <option>Problème de paiement</option>
+            <option>Je suis un organisateur</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Référence de commande <span style="color:var(--text-dim);">(optionnel)</span></label>
+          <input type="text" class="input-plain" placeholder="YP-0000" />
+        </div>
+        <div class="form-group">
+          <label>Message *</label>
+          <textarea class="input-plain" rows="5" placeholder="Décrivez votre situation..." style="resize:vertical; border-radius:var(--radius-sm);"></textarea>
+        </div>
+        <button class="btn btn-primary btn-lg" style="width:100%; justify-content:center;" onclick="sendMessage()">
+          <i class="fa-solid fa-paper-plane"></i> Envoyer le message
+        </button>
+      </div>
+
+      <!-- INFO + FAQ -->
+      <div>
+        <!-- INFO CARD -->
+        <div class="contact-info-card reveal" style="margin-bottom:32px;">
+          <h3 style="margin-bottom:20px;">Infos pratiques</h3>
+          <div class="contact-item">
+            <div class="contact-item-icon">🕐</div>
+            <div class="contact-item-text">
+              <div class="title">Horaires du support</div>
+              <div class="value">Lun–Sam · 8h00–22h00</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">⚡</div>
+            <div class="contact-item-text">
+              <div class="title">Temps de réponse moyen</div>
+              <div class="value">WhatsApp : &lt; 5 min · Email : &lt; 24h</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">💸</div>
+            <div class="contact-item-text">
+              <div class="title">Remboursements</div>
+              <div class="value">Traités dans les 48h ouvrées</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🌍</div>
+            <div class="contact-item-text">
+              <div class="title">Langues</div>
+              <div class="value">Français · Fon · Yoruba · Anglais</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="reveal">
+          <h3 style="margin-bottom:20px;">Questions fréquentes</h3>
+          <div id="faq-list">
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Comment fonctionne le remboursement J-2 ?</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">Si vous annulez votre billet au moins 48h avant le début de l'événement, vous êtes remboursé automatiquement et intégralement. Pas de formulaire, pas de délai d'attente. L'argent est recrédité sur votre mode de paiement d'origine.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Qu'est-ce que l'Option Sérénité ?</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">Pour seulement 500 FCFA supplémentaires, l'Option Sérénité vous permet d'obtenir un remboursement jusqu'à 2 heures avant l'événement. Idéal si votre emploi du temps est imprévisible !</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Comment fonctionne la Bourse de revente ?</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">Si vous ne pouvez plus assister à un événement, vous pouvez mettre votre billet en vente dans notre marketplace sécurisée. Un autre utilisateur peut l'acheter directement. La transaction est sécurisée et le billet est transféré automatiquement.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Mon QR code ne scanne pas — que faire ?</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">Essayez d'augmenter la luminosité de votre écran. Si le problème persiste, contactez notre support WhatsApp immédiatement — nous intervenons en moins de 5 minutes même depuis la file d'entrée.</div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Comment publier mon événement en tant qu'organisateur ?</span>
+                <span class="faq-icon">+</span>
+              </div>
+              <div class="faq-answer">Créez un compte organisateur sur YourPass, puis accédez à votre espace via "Organisateurs". Vous pouvez y créer, gérer et suivre vos événements en temps réel. Notre équipe vous accompagne gratuitement lors de votre premier événement.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,.06); padding-top:32px;">
+      <a href="index.html" class="nav-logo" style="font-size:1.2rem;"><div class="logo-icon" style="width:28px;height:28px;font-size:.8rem;">🎫</div><span>Your<span class="highlight">Pass</span></span></a>
+      <p style="font-size:.85rem; color:var(--text-dim);">© 2025 YourPass Bénin — Tous droits réservés</p>
+      <div style="display:flex; gap:16px;">
+        <a href="#" style="color:var(--text-dim); font-size:.85rem;">CGU</a>
+        <a href="#" style="color:var(--text-dim); font-size:.85rem;">Confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+
+  function filterFaq(q) {
+    const query = q.toLowerCase().trim();
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = !query || text.includes(query) ? 'block' : 'none';
+    });
+  }
+
+  function sendMessage() {
+    showToast('Message envoyé ! Nous vous répondons sous 24h. 📨', 'success');
+  }
+</script>
+</body>
+</html>

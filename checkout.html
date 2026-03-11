@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement - YourPass</title>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="logo-fix.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+   <nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <img src="image video/téléchargement (1).png" alt="YourPass Logo">
+        </div>
+
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html" class="nav-link active">Accueil</a></li>
+            <li><a href="events.html" class="nav-link">Événements</a></li>
+            <li><a href="ads.html" class="nav-link">Partenaires</a></li>
+            <li><a href="connexion.html" class="nav-link">Connexion</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+            <li><a href="dashboard.html" class="nav-link">Profil</a></li>
+           
+            <div class="nav-indicator"></div>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="theme-toggle">
+                <span class="theme-icon">☀️</span>
+            </button>
+            <button class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+    <!-- Checkout Content -->
+    <main class="checkout-main">
+        <div class="container">
+            <!-- Progress Bar -->
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div class="progress-step active" id="step1">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Information</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step2">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Paiement</div>
+                    </div>
+                    <div class="progress-line"></div>
+                    <div class="progress-step" id="step3">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Confirmation</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Content -->
+            <div class="checkout-content">
+                <!-- Left Column - Forms -->
+                <div class="checkout-forms">
+                    <!-- Step 1: Information -->
+                    <div class="form-section active" id="infoSection">
+                        <h2>Informations personnelles</h2>
+                        <form id="infoForm" onsubmit="goToStep(2)">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Nom complet *</label>
+                                    <input type="text" name="fullName" required placeholder="Jean Dupont">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email *</label>
+                                    <input type="email" name="email" required placeholder="jean.dupont@email.com">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Téléphone *</label>
+                                    <input type="tel" name="phone" required placeholder="+229 XX XX XX XX">
+                                </div>
+                                <div class="form-group">
+                                    <label>Date de naissance *</label>
+                                    <input type="date" name="birthDate" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                <input type="text" name="address" placeholder="123 Rue Example, Cotonou">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Code postal</label>
+                                <input type="text" name="postalCode" placeholder="12345">
+                            </div>
+
+                            <button type="submit" class="btn-primary">Continuer vers le paiement</button>
+                        </form>
+                    </div>
+
+                    <!-- Step 2: Payment -->
+                    <div class="form-section" id="paymentSection">
+                        <h2>Méthode de paiement</h2>
+                        
+                        <!-- Payment Method Selection -->
+                        <div class="payment-methods">
+                            <div class="payment-method active" onclick="selectPaymentMethod('card')">
+                                <input type="radio" name="paymentMethod" value="card" checked>
+                                <div class="method-content">
+                                    <span class="method-icon">💳</span>
+                                    <div>
+                                        <strong>Carte bancaire</strong>
+                                        <p>Visa, Mastercard, etc.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-method" onclick="selectPaymentMethod('mobile')">
+                                <input type="radio" name="paymentMethod" value="mobile">
+                                <div class="method-content">
+                                    <span class="method-icon">📱</span>
+                                    <div>
+                                        <strong>Mobile Money</strong>
+                                        <p>MTN, Moov, etc.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Payment Form -->
+                        <div class="payment-form active" id="cardForm">
+                            <form id="cardPaymentForm" onsubmit="processPayment(event)">
+                                <div class="form-group">
+                                    <label>Numéro de carte *</label>
+                                    <input type="text" name="cardNumber" required placeholder="1234 5678 9012 3456" maxlength="19">
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Date d'expiration *</label>
+                                        <input type="text" name="expiry" required placeholder="MM/AA" maxlength="5">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CVV *</label>
+                                        <input type="text" name="cvv" required placeholder="123" maxlength="3">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Nom sur la carte *</label>
+                                    <input type="text" name="cardName" required placeholder="JEAN DUPONT">
+                                </div>
+
+                                <button type="submit" class="btn-primary">
+                                    <span class="loading" style="display: none;"></span>
+                                    <span class="button-text">Payer maintenant</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Mobile Money Form -->
+                        <div class="payment-form" id="mobileForm">
+                            <form id="mobilePaymentForm" onsubmit="processPayment(event)">
+                                <div class="form-group">
+                                    <label>Opérateur *</label>
+                                    <select name="operator" required>
+                                        <option value="">Sélectionner un opérateur</option>
+                                        <option value="mtn">MTN Mobile Money</option>
+                                        <option value="moov">Moov Money</option>
+                                        <option value="orange">Orange Money</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Numéro de téléphone *</label>
+                                    <input type="tel" name="mobileNumber" required placeholder="+229 XX XX XX XX">
+                                </div>
+
+                                <button type="submit" class="btn-primary">
+                                    <span class="loading" style="display: none;"></span>
+                                    <span class="button-text">Payer maintenant</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Back Button -->
+                        <button class="btn-secondary back-btn" onclick="goToStep(1)">Retour</button>
+                    </div>
+
+                    <!-- Step 3: Confirmation -->
+                    <div class="form-section" id="confirmationSection">
+                        <div class="confirmation-content">
+                            <div class="success-icon">✅</div>
+                            <h2>Paiement réussi !</h2>
+                            <p>Vos billets ont été achetés avec succès. Un email de confirmation vous a été envoyé.</p>
+                            
+                            <div class="order-summary">
+                                <h3>Récapitulatif de la commande</h3>
+                                <div id="confirmationDetails">
+                                    <!-- Will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <div class="confirmation-actions">
+                                <button class="btn-primary" onclick="viewTickets()">Voir mes billets</button>
+                                <button class="btn-secondary" onclick="goToHome()">Retour à l'accueil</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Order Summary -->
+                <div class="order-summary-sidebar">
+                    <h3>Récapitulatif de la commande</h3>
+                    
+                    <div id="eventSummary">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Promo Code -->
+                    <div class="promo-section">
+                        <h4>Code promo</h4>
+                        <div class="promo-form">
+                            <input type="text" id="promoCode" placeholder="Entrez votre code">
+                            <button class="btn-secondary" onclick="applyPromoCode()">Appliquer</button>
+                        </div>
+                        <div id="promoMessage" class="promo-message"></div>
+                    </div>
+
+                    <!-- Price Breakdown -->
+                    <div class="price-breakdown">
+                        <div class="price-row">
+                            <span>Prix unitaire:</span>
+                            <span id="unitPrice">0 XOF</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Quantité:</span>
+                            <span id="quantity">0</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Frais de service:</span>
+                            <span id="serviceFee">0 XOF</span>
+                        </div>
+                        <div class="price-row discount" id="discountRow" style="display: none;">
+                            <span>Réduction:</span>
+                            <span id="discount">-0 XOF</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total:</span>
+                            <span id="totalPrice">0 XOF</span>
+                        </div>
+                    </div>
+
+                    <!-- Security Info -->
+                    <div class="security-info">
+                        <div class="security-item">
+                            <span class="security-icon">🔒</span>
+                            <span>Paiement sécurisé</span>
+                        </div>
+                        <div class="security-item">
+                            <span class="security-icon">🛡️</span>
+                            <span>Protection des données</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>YourPass</h4>
+                    <p>Votre plateforme de billetterie pour tous les événements au Bénin</p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">📷</a>
+                        <a href="#">🐦</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="events.html">Tous les événements</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="ads.html">Partenaires</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 YourPass. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="supabase-auth.js"></script>
+    <script src="js/profile.js"></script>
+    <script>
+        // Checkout Page JavaScript
+        let currentStep = 1;
+        let orderData = null;
+        let discountAmount = 0;
+        let selectedPaymentMethod = 'card';
+
+        // Initialize checkout page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderData();
+            setupFormValidation();
+            setupCardFormatting();
+        });
+
+        // Load order data from localStorage
+        function loadOrderData() {
+            const savedOrder = localStorage.getItem('orderData');
+            if (savedOrder) {
+                orderData = JSON.parse(savedOrder);
+                displayOrderSummary();
+                calculateTotalPrice();
+            } else {
+                // Redirect to events page if no order data
+                window.location.href = 'events.html';
+            }
+        }
+
+        // Display order summary
+        function displayOrderSummary() {
+            const eventSummary = document.getElementById('eventSummary');
+            const confirmationDetails = document.getElementById('confirmationDetails');
+            
+            const summaryHTML = `
+                <div class="summary-event">
+                    <h4>${orderData.event.title}</h4>
+                    <p>📍 ${orderData.event.venue}, ${orderData.event.location}</p>
+                    <p>📅 ${formatEventDate(orderData.event.date)}</p>
+                    <p>🕐 ${orderData.event.time}</p>
+                </div>
+                <div class="summary-ticket">
+                    <div class="ticket-type">
+                        <span>Type:</span>
+                        <strong>${orderData.ticketType === 'vip' ? 'VIP' : 'Standard'}</strong>
+                    </div>
+                    <div class="ticket-quantity">
+                        <span>Quantité:</span>
+                        <strong>${orderData.quantity}</strong>
+                    </div>
+                </div>
+            `;
+            
+            eventSummary.innerHTML = summaryHTML;
+            confirmationDetails.innerHTML = summaryHTML;
+        }
+
+        // Calculate total price
+        function calculateTotalPrice() {
+            const unitPrice = orderData.unitPrice;
+            const quantity = orderData.quantity;
+            const serviceFee = Math.round(unitPrice * quantity * 0.05); // 5% service fee
+            const subtotal = unitPrice * quantity;
+            const total = subtotal + serviceFee - discountAmount;
+            
+            document.getElementById('unitPrice').textContent = formatPrice(unitPrice);
+            document.getElementById('quantity').textContent = quantity;
+            document.getElementById('serviceFee').textContent = formatPrice(serviceFee);
+            document.getElementById('totalPrice').textContent = formatPrice(total);
+            
+            if (discountAmount > 0) {
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discount').textContent = `-${formatPrice(discountAmount)}`;
+            }
+        }
+
+        // Navigate between steps
+        function goToStep(step) {
+            // Validate current step before proceeding
+            if (step > currentStep) {
+                if (!validateCurrentStep()) {
+                    return;
+                }
+            }
+            
+            // Update progress bar
+            document.querySelectorAll('.progress-step').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            for (let i = 1; i <= step; i++) {
+                document.getElementById(`step${i}`).classList.add('active');
+            }
+            
+            // Update form sections
+            document.querySelectorAll('.form-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            if (step === 1) {
+                document.getElementById('infoSection').classList.add('active');
+            } else if (step === 2) {
+                document.getElementById('paymentSection').classList.add('active');
+            } else if (step === 3) {
+                document.getElementById('confirmationSection').classList.add('active');
+            }
+            
+            currentStep = step;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Validate current step
+        function validateCurrentStep() {
+            if (currentStep === 1) {
+                const form = document.getElementById('infoForm');
+                return form.checkValidity();
+            }
+            return true;
+        }
+
+        // Select payment method
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Update radio buttons
+            document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+                radio.checked = radio.value === method;
+            });
+            
+            // Update payment forms
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.remove('active');
+            });
+            event.target.closest('.payment-method').classList.add('active');
+            
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            if (method === 'card') {
+                document.getElementById('cardForm').classList.add('active');
+            } else if (method === 'mobile') {
+                document.getElementById('mobileForm').classList.add('active');
+            }
+        }
+
+        // Process payment
+        function processPayment(event) {
+            event.preventDefault();
+            
+            const button = event.target.querySelector('button[type="submit"]');
+            const buttonText = button.querySelector('.button-text');
+            const loading = button.querySelector('.loading');
+            
+            // Show loading state
+            button.disabled = true;
+            buttonText.style.display = 'none';
+            loading.style.display = 'inline-block';
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                // Save order confirmation
+                const confirmationData = {
+                    ...orderData,
+                    paymentMethod: selectedPaymentMethod,
+                    orderNumber: generateOrderNumber(),
+                    orderDate: new Date().toISOString(),
+                    totalAmount: getTotalAmount()
+                };
+                
+                localStorage.setItem('orderConfirmation', JSON.stringify(confirmationData));
+                
+                // Go to confirmation step
+                goToStep(3);
+                
+                // Reset button
+                button.disabled = false;
+                buttonText.style.display = 'inline';
+                loading.style.display = 'none';
+            }, 2000);
+        }
+
+        // Apply promo code
+        function applyPromoCode() {
+            const promoCode = document.getElementById('promoCode').value.trim().toUpperCase();
+            const promoMessage = document.getElementById('promoMessage');
+            
+            if (!promoCode) {
+                showPromoMessage('Veuillez entrer un code promo', 'error');
+                return;
+            }
+            
+            // Mock promo codes
+            const promoCodes = {
+                'WELCOME10': 0.1,
+                'EVENT20': 0.2,
+                'SPECIAL15': 0.15
+            };
+            
+            if (promoCodes[promoCode]) {
+                const discountPercent = promoCodes[promoCode];
+                discountAmount = Math.round(orderData.totalPrice * discountPercent);
+                calculateTotalPrice();
+                showPromoMessage(`Code appliqué ! ${discountPercent * 100}% de réduction`, 'success');
+            } else {
+                showPromoMessage('Code promo invalide', 'error');
+            }
+        }
+
+        // Show promo message
+        function showPromoMessage(message, type) {
+            const promoMessage = document.getElementById('promoMessage');
+            promoMessage.textContent = message;
+            promoMessage.className = `promo-message ${type}`;
+            
+            setTimeout(() => {
+                promoMessage.textContent = '';
+                promoMessage.className = 'promo-message';
+            }, 3000);
+        }
+
+        // View tickets
+        function viewTickets() {
+            window.location.href = 'success.html';
+        }
+
+        // Go to home
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+
+        // Setup form validation
+        function setupFormValidation() {
+            // Add real-time validation
+            const inputs = document.querySelectorAll('input[required]');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.value.trim() === '') {
+                        this.classList.add('error');
+                    } else {
+                        this.classList.remove('error');
+                    }
+                });
+            });
+        }
+
+        // Setup card formatting
+        function setupCardFormatting() {
+            // Card number formatting
+            const cardNumberInput = document.querySelector('input[name="cardNumber"]');
+            if (cardNumberInput) {
+                cardNumberInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\s/g, '');
+                    let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                    e.target.value = formattedValue;
+                });
+            }
+            
+            // Expiry date formatting
+            const expiryInput = document.querySelector('input[name="expiry"]');
+            if (expiryInput) {
+                expiryInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length >= 2) {
+                        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                    }
+                    e.target.value = value;
+                });
+            }
+            
+            // CVV validation
+            const cvvInput = document.querySelector('input[name="cvv"]');
+            if (cvvInput) {
+                cvvInput.addEventListener('input', function(e) {
+                    e.target.value = e.target.value.replace(/\D/g, '');
+                });
+            }
+        }
+
+        // Utility functions
+        function generateOrderNumber() {
+            return 'YP' + Date.now() + Math.random().toString(36).substr(2, 5).toUpperCase();
+        }
+
+        function getTotalAmount() {
+            const unitPrice = orderData.unitPrice;
+            const quantity = orderData.quantity;
+            const serviceFee = Math.round(unitPrice * quantity * 0.05);
+            return unitPrice * quantity + serviceFee - discountAmount;
+        }
+
+        function formatPrice(price) {
+            return new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'XOF',
+                minimumFractionDigits: 0
+            }).format(price);
+        }
+
+        function formatEventDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+        }
+    </script>
+
+    <style>
+        /* Checkout Page Specific Styles */
+        .checkout-main {
+            padding: 120px 0 var(--spacing-3xl);
+            background: var(--gray-50);
+            min-height: 100vh;
+        }
+
+        .progress-section {
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: var(--gray-200);
+            color: var(--gray-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            transition: var(--transition-fast);
+        }
+
+        .progress-step.active .step-number {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .step-label {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--primary-color);
+        }
+
+        .progress-line {
+            width: 100px;
+            height: 2px;
+            background: var(--gray-200);
+            margin: 0 var(--spacing-md) var(--spacing-lg);
+        }
+
+        .checkout-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: var(--spacing-3xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .checkout-forms {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .form-section h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-xl);
+            color: var(--gray-800);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--gray-700);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            transition: var(--transition-fast);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: var(--primary-color);
+        }
+
+        .payment-methods {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-lg);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-color);
+        }
+
+        .payment-method.active {
+            border-color: var(--primary-color);
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .payment-method input[type="radio"] {
+            margin-right: var(--spacing-md);
+        }
+
+        .method-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            flex: 1;
+        }
+
+        .method-icon {
+            font-size: var(--font-size-2xl);
+        }
+
+        .method-content strong {
+            display: block;
+            font-weight: 600;
+        }
+
+        .method-content p {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+            margin: 0;
+        }
+
+        .payment-form {
+            display: none;
+        }
+
+        .payment-form.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .back-btn {
+            margin-top: var(--spacing-lg);
+        }
+
+        .order-summary-sidebar {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .order-summary-sidebar h3 {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--gray-800);
+        }
+
+        .summary-event {
+            padding: var(--spacing-lg);
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .summary-event h4 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .summary-event p {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .summary-ticket {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .summary-ticket span {
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+        }
+
+        .summary-ticket strong {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        .promo-section {
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-xl);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .promo-section h4 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .promo-form {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .promo-form input {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-sm);
+        }
+
+        .promo-message {
+            font-size: var(--font-size-sm);
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-lg);
+        }
+
+        .promo-message.success {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .promo-message.error {
+            color: var(--primary-color);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .price-breakdown {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+        }
+
+        .price-row.discount {
+            color: var(--accent-green);
+        }
+
+        .price-row.total {
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+            color: var(--primary-color);
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .security-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            color: var(--gray-600);
+        }
+
+        .security-icon {
+            font-size: var(--font-size-lg);
+        }
+
+        .confirmation-content {
+            text-align: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .success-icon {
+            font-size: var(--font-size-5xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .confirmation-content h2 {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--gray-800);
+        }
+
+        .confirmation-content p {
+            font-size: var(--font-size-lg);
+            color: var(--gray-600);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .order-summary {
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            text-align: left;
+        }
+
+        .order-summary h3 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .confirmation-actions {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .checkout-content {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary-sidebar {
+                position: static;
+                margin-top: var(--spacing-xl);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-bar {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+            }
+
+            .progress-line {
+                width: 2px;
+                height: 30px;
+                margin: 0;
+            }
+
+            .confirmation-actions {
+                flex-direction: column;
+            }
+
+            .promo-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</body>
+</html>
